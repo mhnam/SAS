@@ -17,6 +17,16 @@ MATH M 15 81 MATH F 10 77 MATH F 15 55 MATH F 20 78
 ;
 RUN;
 
+DATA drink;
+	INPUT age drink $ count @@;
+CARDS;
+18 A 10 19 A 13 20 A 12
+18 B 14 19 B 7 20 B 4
+18 C 2 19 C 10 20 C 6
+18 D 12 19 D 8 20 D 10
+;
+RUN;
+
 /*****PROC MEANS*****/
 /*default*/
 PROC MEANS data = score;
@@ -76,4 +86,16 @@ RUN;
 PROC FREQ data = score order = data;
 	tables dept gender;
 	tables dept*gender / norow nocol nopercent nofreq; /*to omit*/
+RUN;
+
+/*weight*/
+PROC FREQ data = drink;
+	weight count;
+	tables age*drink;
+	tables age*drink / nocol nopercent;
+RUN;
+
+/*common mistake on not doing weight*/
+PROC FREQ data = drink;
+	tables age*drink;
 RUN;

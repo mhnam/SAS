@@ -95,7 +95,7 @@ PROC FREQ data = drink;
 	tables age*drink / nocol nopercent;
 RUN;
 
-/*common mistake on not doing weight*/
+/*common mistake not doing weight*/
 PROC FREQ data = drink;
 	tables age*drink;
 RUN;

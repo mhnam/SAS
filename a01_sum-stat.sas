@@ -33,6 +33,9 @@ PROC MEANS data = king max min median mean stddev order = data;
 	output out = king_out max = max min = min median = median mean = mean stddev = stddev;
 RUN;
 
+PROC PRINT data = king_out;
+RUN;
+
 /*****PROBLEM C*****/
 PROC SORT data = king;
 	by agegroup;

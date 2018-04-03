@@ -25,7 +25,13 @@ CARDS;
 RUN;
 
 /*****PROC UNIVARIATE*****/
-/*default*/
 PROC UNIVARIATE data = csi cibasic alpha = 0.05;
+	var csi;
+	LABEL csi = "소비자만족지수";
+RUN;
+
+/*****PROC MEANS*****/
+PROC MEANS data = csi n mean std clm alpha = 0.05; /*only ci for mean is possible*/
+	var csi;
 	LABEL csi = "소비자만족지수";
 RUN;

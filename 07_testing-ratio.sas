@@ -1,3 +1,12 @@
+/*
+DATE: 04/12/2018
+AUTHOR: MINHYUK NAM
+PURPOSE: Testing
+NOTES: 
+1) Use FREQ
+*/
+
+/*****CREATING DATASET*****/
 DATA goods;
 	INPUT state $ count @@;
 CARDS;
@@ -5,6 +14,7 @@ CARDS;
 ;
 RUN;
 
+/*****PROC FREQ*****/
 PROC FREQ data = goods order = data;
 	weight count; /*since the given data is not */
 	exact binomial; /*to define a distribution*/

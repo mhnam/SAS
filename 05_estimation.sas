@@ -23,16 +23,31 @@ CARDS;
 18 C 2 19 C 10 20 C 6
 18 D 12 19 D 8 20 D 10
 ;
+
+DATA goods;
+	INPUT state $ count @@;
+CARDS;
+	Poor 54 Good 346
+;
 RUN;
 
-/*****PROC UNIVARIATE*****/
+/*****MEAN*****/
+/*PROC UNIVARIATE*/
 PROC UNIVARIATE data = csi cibasic alpha = 0.05;
 	var csi;
 	LABEL csi = "소비자만족지수";
 RUN;
 
-/*****PROC MEANS*****/
+/*PROC MEANS*/
 PROC MEANS data = csi n mean std clm alpha = 0.05; /*only ci for mean is possible*/
 	var csi;
 	LABEL csi = "소비자만족지수";
+RUN;
+
+/*****RATIO*****/
+/*PROC FREQ*/
+PROC FREQ data = goods order = data;
+	weight count; /*since the given data is not */
+	exact binomial; /*to define a distribution*/
+	tables state / binomial (p = 0.15)  alpha = 0.05;
 RUN;

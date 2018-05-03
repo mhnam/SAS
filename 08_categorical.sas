@@ -54,3 +54,9 @@ PROC FREQ data = bean;
 	weight count;
 	tables type / nocum testf = (317 106 90 43);
 RUN;
+
+/*****적합도검정(3)*****/
+PROC FREQ data = bean;
+	weight count;
+	tables type / binomial (p=0.5625);
+RUN;

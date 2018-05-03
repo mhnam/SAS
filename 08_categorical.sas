@@ -1,5 +1,12 @@
+/*
+DATE: 03/05/2018
+AUTHOR: MINHYUK NAM
+PURPOSE: Testing categorical variable
+NOTES: 
+1) using freq
+*/
 
-/*CREATE DATASET*/
+/*****CREATE DATASET*****/
 DATA soft;
 	INPUT age $ beverage $ count @@;
 CARDS;
@@ -23,26 +30,26 @@ CARDS;
 ;
 RUN;
 
-/*동질성검정*/
+/*****동질성검정*****/
 PROC FREQ data = soft order = data;
 	weight count;
 	exact fisher;
 	tables age * beverage / nocol nopercent expected chisq;
 RUN;
 
-/*독립성검정*/
+/*****독립성검정*****/
 PROC FREQ data = edueco order = data;
 	weight count;
 	tables edu * eco / nocol nopercent chisq measures;
 RUN;
 
-/*적합도검정(1)*/
+/*****적합도검정(1)*****/
 PROC FREQ data = bean;
 	weight count;
 	tables type / nocum testp = (0.5625 0.1875 0.1875 0.0625);
 RUN;
 
-/*적합도검정(2)*/
+/*****적합도검정(2)*****/
 PROC FREQ data = bean;
 	weight count;
 	tables type / nocum testf = (317 106 90 43);

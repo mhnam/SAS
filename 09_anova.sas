@@ -70,3 +70,12 @@ PROC ANOVA data = HARVEST;
 RUN;
 
 QUIT; /*to mark that the procedure is finished*/
+
+/*CONTRAST ```USE GLM```*/
+PROC GLM data = ONEFAC;
+	CLASS DENSITY; /*TO MARK X*/
+	MODEL Y = DENSITY; /*TO MARK Y = X*/
+	CONTRAST '6% 8% 10 % VS 12%' DENSITY .33333 .33333 .33333 -1;
+	CONTRAST '6% VS 8%' DENSITY 1 -1 0 0;
+	MEANS DENSITY / LSD ALPHA = 0.01; /*NOT rejected b/c 1 and 2 are different under 2% p-value*/ /*BON, SCHEFFE, TUKEY, DUNCAN // CLDIFF, LINES */
+RUN;

@@ -30,32 +30,39 @@ CARDS;
 ;
 RUN;
 
-/*****동질성검정*****/
+/*****Tests of Homogeneity(동질성검정)*****/
 PROC FREQ data = soft order = data;
 	weight count;
 	exact fisher;
 	tables age * beverage / nocol nopercent expected chisq;
 RUN;
 
-/*****독립성검정*****/
+/*****Tests of Independence(독립성검정)*****/
 PROC FREQ data = edueco order = data;
 	weight count;
 	tables edu * eco / nocol nopercent chisq measures;
 RUN;
 
-/*****적합도검정(1)*****/
+/**
+Note that the difference between Tests of Homogeneity and Independence is the shape of the data -
+the number of observation between class variable is identical for Tests of Homogeneity,
+while Tests of Independence is not
+**/
+
+/*****Tests of Goodness-of-Fit(적합도검정)*****/
+/*1*/
 PROC FREQ data = bean;
 	weight count;
 	tables type / nocum testp = (0.5625 0.1875 0.1875 0.0625);
 RUN;
 
-/*****적합도검정(2)*****/
+/*2*/
 PROC FREQ data = bean;
 	weight count;
 	tables type / nocum testf = (317 106 90 43);
 RUN;
 
-/*****적합도검정(3)*****/
+/*3*/
 PROC FREQ data = bean;
 	weight count;
 	tables type / binomial (p=0.5625);

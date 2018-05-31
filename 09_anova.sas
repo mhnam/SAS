@@ -1,5 +1,5 @@
 /*
-DATE: 17/05/2018 - 24/05/2018
+DATE: 17/05/2018 - 31/05/2018
 AUTHOR: MINHYUK NAM
 PURPOSE: ANOVA
 NOTES: 
@@ -35,12 +35,31 @@ CARDS;
 	264 214 327 304 .
 	335 436 423 380 465
 ;
+
+DATA SALES;
+	DO city = 'Large  ', 'Middle', 'Small';
+		DO design = 'A', 'B', 'C';
+			DO resp = 1 to 3;
+				INPUT sales @@;
+				OUTPUT;
+			END;
+		END;
+	END;
+
+CARDS;
+	23 20 21	22 19 20	19 18 21
+	22 20 19	24 25 22	20 19 22
+	18 18 16	21 23 20	20 22 24
+;
 RUN;
 
 PROC PRINT data = ONEFAC;
 RUN;
 
 PROC PRINT data = HARVEST;
+RUN;
+
+PROC PRINT data = SALES;
 RUN;
 
 /*****일원 배치법*****/
@@ -79,3 +98,12 @@ PROC GLM data = ONEFAC;
 	CONTRAST '6% VS 8%' DENSITY 1 -1 0 0;
 	MEANS DENSITY / LSD ALPHA = 0.01; /*NOT rejected b/c 1 and 2 are different under 2% p-value*/ /*BON, SCHEFFE, TUKEY, DUNCAN // CLDIFF, LINES */
 RUN;
+
+/*****이원 배치법*****/
+PROC ANOVA data = SALES;
+	CLASS city design;
+	MODEL sales = city design city * design;
+	MEANS city design city * design;
+RUN;
+
+QUIT;

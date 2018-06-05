@@ -1,9 +1,11 @@
 /*
-DATE: 17/05/2018 - 31/05/2018
+DATE: 17/05/2018 - 05/06/2018
 AUTHOR: MINHYUK NAM
 PURPOSE: ANOVA
 NOTES: 
-1) using anova
+1) using ANOVA
+2) using GLM
+3) using GPLOT
 */
 
 /*****CREATE DATASET*****/
@@ -62,7 +64,7 @@ RUN;
 PROC PRINT data = SALES;
 RUN;
 
-/*****일원 배치법*****/
+/*****ONE-WAY ANOVA*****/
 PROC ANOVA data = ONEFAC;
 	CLASS DENSITY; /*TO MARK X*/
 	MODEL Y = DENSITY; /*TO MARK Y = X*/
@@ -73,7 +75,7 @@ PROC ANOVA data = HARVEST;
 	MODEL YIELD = FERTIL; /*TO MARK Y = X*/
 RUN;
 
-/*다중비교*/
+/*Multiple Comparison*/
 PROC ANOVA data = ONEFAC;
 	CLASS DENSITY; /*TO MARK X*/
 	MODEL Y = DENSITY; /*TO MARK Y = X*/
@@ -99,11 +101,29 @@ PROC GLM data = ONEFAC;
 	MEANS DENSITY / LSD ALPHA = 0.01; /*NOT rejected b/c 1 and 2 are different under 2% p-value*/ /*BON, SCHEFFE, TUKEY, DUNCAN // CLDIFF, LINES */
 RUN;
 
-/*****이원 배치법*****/
+/*****TWO-WAY ANOVA*****/
 PROC ANOVA data = SALES;
-	CLASS city design;
-	MODEL sales = city design city * design;
+	CLASS city design; /*put TWO variables*/
+	MODEL sales = city design city * design; /*put INTERACTION term*/
 	MEANS city design city * design;
 RUN;
 
 QUIT;
+
+/*Check Interaction Effect using Plot*/
+PROC SUMMARY data = SALES nway;
+	CLASS city design;
+	VAR sales;
+	OUTPUT out = meanout mean(sales) = mean;
+RUN;
+
+PROC PRINT data = meanout;
+RUN;
+
+symbol1 i = join w = 1 v = dot cv = black h = 2;
+symbol2 i = join w = 1 v = circle cv = red h = 2;
+symbol3 i = join w = 1 v = square cv = blue h = 2;
+
+PROC GPLOT data = meanout;
+	PLOT mean * city=design;
+RUN; /*By checking the plot, we can determine whether there is an interaction effect*/

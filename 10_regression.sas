@@ -8,7 +8,7 @@ NOTES:
 
 /*****CREATE DATASET*****/
 DATA adversales;
-	DO company = 1 to 12
+	DO company = 1 to 12;
 	INPUT adver sales @@;
 	OUTPUT;
 	END; /*to finish DO loop*/

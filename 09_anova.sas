@@ -120,10 +120,19 @@ RUN;
 PROC PRINT data = meanout;
 RUN;
 
+/*
+NOTE
+i: connection method
+w: width of line
+v: shape of vertex
+cv: colour of vertex
+h: size of vertex
+*/
+
 symbol1 i = join w = 1 v = dot cv = black h = 2;
 symbol2 i = join w = 1 v = circle cv = red h = 2;
 symbol3 i = join w = 1 v = square cv = blue h = 2;
 
 PROC GPLOT data = meanout;
-	PLOT mean * city=design;
+	PLOT mean * city=design; /* PLOT <y-axis> * <x-axis> = <drawn by> */
 RUN; /*By checking the plot, we can determine whether there is an interaction effect*/

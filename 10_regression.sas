@@ -8,17 +8,15 @@ NOTES:
 
 /*****CREATE DATASET*****/
 DATA adversales;
-	DO DENSITY = '  6%', '  8%', '10%', '12%'; /* 1 to 4; *수분함유량 OR use respective*/
-	INPUT Y @@;
+	DO company = 1 to 12
+	INPUT adver sales @@;
 	OUTPUT;
 	END; /*to finish DO loop*/
 
 CARDS;
-	6250 6150 6080 6200
-	6300 6290 6120 6220
-	6420 6170 6020 6010
-	6220 6180 6040 6030
-	6320 6080 6020 6000
+	11 23 19 32 23 36 26 46 56 93
+	62 99 29 49 30 50 38 65 39 70
+	46 71 49 89
 ;
 
 PROC PRINT data = adversales;
